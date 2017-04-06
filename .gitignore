@@ -1,0 +1,11 @@
+
+
+# Ignore all the modules created by npm install
+/node_modules/*
+
+# Ignore dummy database if it's been created
+/bin/userdata
+
+# Ignore Eclipse project
+.project
+/.settings/*
