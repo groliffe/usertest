@@ -1,0 +1,25 @@
+{
+  "name": "usertest",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "test": "mocha"
+  },
+  "dependencies": {
+    "body-parser": "~1.0.0",
+    "cookie-parser": "~1.0.1",
+    "debug": "~0.7.4",
+    "email-validator": "^1.0.7",
+    "express": "~4.0.0",
+    "morgan": "~1.0.0",
+    "nedb": "^1.8.0",
+    "pug": "^2.0.0-beta11",
+    "serve-favicon": "^2.4.2"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^2.0.1",
+    "mocha": "^2.4.5"
+  }
+}
