@@ -51,7 +51,7 @@ describe('Users', () => {
 	describe('/POST user', () => {
 		it('it should not POST a user with an invalid email', (done) => {
 			var user = {
-					id: "1",
+					_id: "1",
 					forename: "Fred",
 					surname: "Smith",
 					email: "a bad email"
@@ -69,7 +69,7 @@ describe('Users', () => {
 		});
 		it('it should POST a user ', (done) => {
 			var user = {
-					id: "1",
+					_id: "1",
 					forename: "Fred",
 					surname: "Smith",
 					email: "fred.smith@dummy.email.address"
@@ -80,11 +80,29 @@ describe('Users', () => {
 			.end((err, res) => {
 				res.should.have.status(200);
 				res.body.should.be.a('object');
-				res.body.should.have.property('id');
+				res.body.should.have.property('_id');
 				res.body.should.have.property('forename');
 				res.body.should.have.property('surname');
 				res.body.should.have.property('email');
 				res.body.should.have.property('created');
+				done();
+			});
+		});
+		it('it should NOT POST a user with a duplicate id', (done) => {
+			var user = {
+					_id: "1",
+					forename: "Fred",
+					surname: "Smith",
+					email: "fred.smith@dummy.email.address"
+			}
+			chai.request(server)
+			.post('/users')
+			.send(user)
+			.end((err, res) => {
+				res.should.have.status(500);
+				res.body.should.be.a('object');
+				res.body.should.have.property('error');
+				res.body.error.should.have.property('errorType').eql('uniqueViolated');
 				done();
 			});
 		});
@@ -106,7 +124,7 @@ describe('Users', () => {
 				res.body.should.have.property('surname').eql('Smith');
 				res.body.should.have.property('email').eql('fred.smith@dummy.email.address');
 				res.body.should.have.property('created');
-				res.body.should.have.property('id').eql('1');
+				res.body.should.have.property('_id').eql('1');
 				done();
 			});
 		});
@@ -143,7 +161,7 @@ describe('Users', () => {
 				res.body[0].should.have.property('surname').eql('Smith');
 				res.body[0].should.have.property('email');
 				res.body[0].should.have.property('created');
-				res.body[0].should.have.property('id');
+				res.body[0].should.have.property('_id');
 				done();
 			});
 		});
@@ -230,7 +248,7 @@ describe('Users', () => {
 				res.body.should.have.property('surname').eql('Smithers');
 				res.body.should.have.property('email').eql('fred.smith@dummy.email.address');
 				res.body.should.have.property('created');
-				res.body.should.have.property('id').eql('1');
+				res.body.should.have.property('_id').eql('1');
 				done();
 			});
 		});
@@ -298,4 +316,5 @@ describe('Users', () => {
 		});
 
 	});
+	
 });

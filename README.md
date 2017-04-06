@@ -151,6 +151,17 @@ The application is configured to listen on port 3000.
 }
 ```
 
+* HTTP status: 500
+* Body Example:
+```
+{
+  "error": {
+    "key": "4",
+    "errorType": "uniqueViolated"
+  }
+}
+```
+
 ### Update a user. Will validate the email address for correct format.
 
 #### Request:
@@ -224,6 +235,11 @@ The application is configured to listen on port 3000.
 ### Running from the console
 
 nodejs bin/www
+
+
+### Running the test suite
+
+npm test
 
 
 ### Building a Docker image.

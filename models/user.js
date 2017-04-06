@@ -1,5 +1,5 @@
 function User() {
-	this.id = undefined;
+	this._id = undefined;
 	this.forename = undefined;
 	this.surname = undefined;
 	this.email = undefined;

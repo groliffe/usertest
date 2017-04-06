@@ -7,7 +7,7 @@ var router = express.Router();
 // hide mongo specific stuff from returned user
 function hideDBSpecific(user) {
 	var slimUser = {};
-	slimUser.id = user.id;
+	slimUser._id = user._id;
 	slimUser.forename = user.forename;
 	slimUser.surname = user.surname;
 	slimUser.email = user.email;
@@ -21,7 +21,7 @@ function hideDBSpecificList(users) {
 
 	users.forEach(function(user) {
 		var slimUser = {};
-		slimUser.id = user.id;
+		slimUser._id = user._id;
 		slimUser.forename = user.forename;
 		slimUser.surname = user.surname;
 		slimUser.email = user.email;
@@ -39,7 +39,7 @@ function validateUser(user) {
 router.get('/:id', function(req, res) {
 	// Return a user with a specific id.
 	if (req.params.id != undefined) {
-		db.getDb().findOne({ 'id': req.params.id}, function(err, user) {
+		db.getDb().findOne({ '_id': req.params.id}, function(err, user) {
 			if (err) {
 				res.send(500, { error: err });
 			} else if (user != null) {
@@ -82,7 +82,7 @@ router.put('/:id', function(req, res) {
 
 	} else {
 	
-		db.getDb().update({ 'id': req.params.id}, 
+		db.getDb().update({ '_id': req.params.id}, 
 				{ $set:{ surname: req.body.surname,
 				     forename: req.body.forename,
 				     email: req.body.email}
@@ -105,12 +105,13 @@ router.put('/:id', function(req, res) {
 
 router.post('/', function(req, res) {
 	
+	
 	if(!validateUser(req.body)) {
 		res.send(400, { error: "Invalid email: '" + req.body.email + "'"});
 	} else {
 	
 		user = new User();
-		user.id = req.body.id;
+		user._id = req.body._id;
 		user.forename = req.body.forename;
 		user.surname = req.body.surname;
 		user.email = req.body.email;
@@ -127,7 +128,7 @@ router.post('/', function(req, res) {
 });
 
 router.delete('/:id', function(req, res) {
-	db.getDb().remove({ 'id': req.params.id}, {}, function(err, numDeleted, resp) {
+	db.getDb().remove({ '_id': req.params.id}, {}, function(err, numDeleted, resp) {
 		if (err) {
 			res.send(500, { error: err });
 		} else if (numDeleted == 0) {
